@@ -19,6 +19,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        
+        
     }
     override func viewDidAppear(_ animated: Bool) {
     }
@@ -33,6 +35,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let region = MKCoordinateRegion(center: center, span: span)
         self.map.setRegion(region, animated: true)
+//        self.map.regionThatFits(region)
+        
         CLGeocoder().reverseGeocodeLocation(userLocation) { (placemarks, error) in
             if let error = error {
                 print(error)
@@ -69,5 +73,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        locationManager.stopUpdatingLocation()
+    }
 }
 
